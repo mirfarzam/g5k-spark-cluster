@@ -8,7 +8,7 @@ config.read('config.conf')
 
 g5kConfig = config['g5k']
 deployImg = str(g5kConfig['deploy.image.name'])
-imageAddress = str(g5kConfig['deploy.imgae.address'])
+imageAddress = "https://s3.datapirates.ir/digvery/debian10-spark-namb.tgz?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=dLThTJ8J%2F20200209%2F%2Fs3%2Faws4_request&X-Amz-Date=20200209T122327Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=b4c5978f8c89a0ebb3111e16354ebb02644a80348539bc8572f2212273cf431d"
 userName = str(g5kConfig['user.name'])
 oarFile = str(g5kConfig['oar.file.location'])
 multiCluster = str(g5kConfig['multi.cluster']) in "yes"
