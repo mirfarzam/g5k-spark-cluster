@@ -45,12 +45,12 @@ frontout = channel.makefile('r')
 
 # print("Connection Successful to Frontend ...")
 
-# make image ready on front-end node
-# stdin, stdout, stderr = frontend.exec_command('mkdir images') 
-# os.system('scp images/debian10-spark-base.env smirmoeini@access.grid5000.fr:sophia/images/debian10-spark-base.env')
-# print("please wait for dowloading the image, it takes few minutes ...")
-# frontend.execute('curl -o images/debian10-spark-base.tgz {}'.format(imageAddress)) 
-# print("image downloaded successfully")
+make image ready on front-end node
+stdin, stdout, stderr = frontend.exec_command('mkdir images') 
+os.system('scp images/debian10-spark-base.env smirmoeini@access.grid5000.fr:sophia/images/debian10-spark-base.env')
+print("please wait for dowloading the image, it takes few minutes ...")
+frontend.execute('curl -o images/debian10-spark-base.tgz {}'.format(imageAddress)) 
+print("image downloaded successfully")
 
 # requesting for nodes
 # shin, shout, sherr = frontend.execute('oarsub -t deploy -l nodes={} walltime=3; cat $OAR_FILE_NODES'.format(numberOfNodes)) 

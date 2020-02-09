@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+import os
 
 config = ConfigParser()
 config.read('config.conf')
@@ -8,3 +9,9 @@ deployImg = str(g5kConfig['deploy.image.name'])
 userName = str(g5kConfig['user.name'])
 oarFile = str(g5kConfig['oar.file.location'])
 multiCluster = str(g5kConfig['multi.cluster']) in "yes"
+
+oarFile = os.environ.get('OAR_NODE_FILE')
+
+# Download the image
+# os.system('curl -o images/debian10-spark-base.tgz {}'.format(imageAddress)) 
+
