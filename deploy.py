@@ -71,11 +71,11 @@ with open("namb/config/spark-benchmark.yml", "r+") as f:
     
 ### Run Namb Application
 os.system(sparkDirectory + "/bin/spark-submit"
-              + "--class fr.unice.namb.spark.BenchmarkApplication"
-              + "--master {}".format(masterAddress)
-              + "/namb/spark-namb.jar"
-              + "namb/config/spark-benchmark.yml"
-              + "namb/config/workflow_schema.yml"
+              + " --class fr.unice.namb.spark.BenchmarkApplication"
+              + " --master {}".format(masterAddress)
+              + " /namb/spark-namb.jar"
+              + " namb/config/spark-benchmark.yml"
+              + " namb/config/workflow_schema.yml"
               )
 
     
