@@ -49,7 +49,7 @@ masterNode.execute("./spark/bin/spark-class org.apache.spark.deploy.master.Maste
 
 for node in clusterNodes:
     print("running on worker : {}".format(node))
-    worker = sh.ShellHandler(masterNode, "root")
+    worker = sh.ShellHandler(node, "root")
     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
     masterNode.execute("./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
