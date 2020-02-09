@@ -70,7 +70,7 @@ with open("namb/config/spark-benchmark.yml", "r+") as f:
      f.write(old) # write the new line before
     
 ### Run Namb Application
-runnerCommand(sparkDirectory + "/bin/spark-submit"
+os.system(sparkDirectory + "/bin/spark-submit"
               + "--class fr.unice.namb.spark.BenchmarkApplication"
               + "--master {}".format(masterAddress)
               + "/namb/spark-namb.jar"
