@@ -3,6 +3,7 @@ import os
 import paramiko
 import ShellHandler as sh
 import re
+import yaml
 
 config = ConfigParser()
 config.read('config.conf')
@@ -13,6 +14,13 @@ imageAddress = "https://s3.datapirates.ir/digvery/debian10-spark-namb.tgz?X-Amz-
 userName = str(g5kConfig['user.name'])
 oarFile = str(g5kConfig['oar.file.location'])
 multiCluster = str(g5kConfig['multi.cluster']) in "yes"
+
+java8Directory = str(g5kConfig['java8.directory'])
+sparkDirectory = str(g5kConfig['spark.directory'])
+
+
+### Config Java Version in Front-end
+masterNode.execute('export JAVA_HOME="{}";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
 
 oarFile = os.environ.get('OAR_NODE_FILE')
 with open(oarFile) as file:
@@ -39,7 +47,7 @@ os.system(kadeployCommad)
 masterNode = clusterNodes.pop(0)
 masterNode = sh.ShellHandler(masterNode, "root")
 ## Setting Correct Java Version
-# masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
+masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
 ## get master IP
 shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'")
 masterIP = (shout[0])[0:-2]
@@ -53,6 +61,27 @@ for node in clusterNodes:
     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
     masterNode.execute("./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
+
+## Modify Spark Config File
+with open("namb/config/spark-benchmark.yml") as f:
+     list_doc = yaml.load(f)
+for sense in list_doc:
+    if sense["master"] != masterAddress:
+         sense["value"] = masterAddress
+with open("namb/config/spark-benchmark.yml", "w") as f:
+    yaml.dump(list_doc, f)
+    
+### Run Namb Application
+runnerCommand(sparkDirectory + "/bin/spark-submit"
+              + "--class fr.unice.namb.spark.BenchmarkApplication"
+              + "--master {}".format(masterAddress)
+              + "/namb/spark-namb.jar"
+              + "namb/config/spark-benchmark.yml"
+              + "namb/config/workflow_schema.yml"
+              )
+
+    
+
     
 
     
