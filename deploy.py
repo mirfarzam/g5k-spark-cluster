@@ -50,7 +50,7 @@ masterNode = sh.ShellHandler(masterNode, "root")
 masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
 ## get master IP
 shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'")
-masterIP = (shout[0])
+masterIP = re.sub(r'\n','',shout[0])
 masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
 masterNode.execute("./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
@@ -70,13 +70,9 @@ with open("namb/config/spark-benchmark.yml", "r+") as f:
      f.write(old) # write the new line before
     
 ### Run Namb Application
-os.system(sparkDirectory + "/bin/spark-submit"
-              + " --class fr.unice.namb.spark.BenchmarkApplication"
-              + " --master {}".format(masterAddress)
-              + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar"
-              + " ~/g5k-spark-cluster/namb/config/workflow_schema.yml"
-              + " ~/g5k-spark-cluster/namb/config/spark-benchmark.yml"
-              )
+majid = sparkDirectory + "/bin/spark-submit" + " --class fr.unice.namb.spark.BenchmarkApplication" + " --master {}".format(masterAddress) + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar" + " /home/smirmoeini/g5k-spark-cluster/namb/config/workflow_schema.yml" + " /home/smirmoeini/g5k-spark-cluster/namb/config/spark-benchmark.yml"
+print(majid)
+os.system(majid)
 
     
 
