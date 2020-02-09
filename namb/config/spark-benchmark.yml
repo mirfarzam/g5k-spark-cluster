@@ -1,5 +1,5 @@
-debugFrequency: 10
-batchTime: 10
-master: local # local or spark master address not the local[x]
-executors: 5
 applicationName: spark-namb
+batchTime: 10
+debugFrequency: 10
+executors: 5
+master: farzam

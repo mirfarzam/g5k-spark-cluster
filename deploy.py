@@ -63,13 +63,11 @@ for node in clusterNodes:
     print("success on {}".format(node))
 
 ## Modify Spark Config File
-with open("namb/config/spark-benchmark.yml") as f:
-     list_doc = yaml.load(f)
-for sense in list_doc:
-    if sense["master"] != masterAddress:
-         sense["value"] = masterAddress
-with open("namb/config/spark-benchmark.yml", "w") as f:
-    yaml.dump(list_doc, f)
+with open("namb/config/spark-benchmark.yml", "r+") as f:
+     old = f.read() # read everything in the file
+     f.seek(0)
+     old = re.sub(r'master: (.*)$','master: {}'.format(masterAddress), old)
+     f.write(old) # write the new line before
     
 ### Run Namb Application
 runnerCommand(sparkDirectory + "/bin/spark-submit"
