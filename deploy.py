@@ -13,6 +13,10 @@ multiCluster = str(g5kConfig['multi.cluster']) in "yes"
 oarFile = os.environ.get('OAR_NODE_FILE')
 with open(oarFile) as file:
     clusterNodes = [line.strip() for line in file]
+    
+clusterNodes = list(set(clusterNodes))
+nodesNbr = len(clusterNodes)
+print("Your cluster is composed by {} nodes: {}".format(nodesNbr, clusterNodes))
 
 # Download the image
 # os.system('curl -o images/debian10-spark-base.tgz {}'.format(imageAddress)) 
