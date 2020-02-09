@@ -74,8 +74,8 @@ os.system(sparkDirectory + "/bin/spark-submit"
               + " --class fr.unice.namb.spark.BenchmarkApplication"
               + " --master {}".format(masterAddress)
               + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar"
-              + " namb/config/spark-benchmark.yml"
-              + " namb/config/workflow_schema.yml"
+              + " /home/smirmoeini/g5k-spark-cluster/namb/config/spark-benchmark.yml"
+              + " /home/smirmoeini/g5k-spark-cluster/namb/config/workflow_schema.yml"
               )
 
     
