@@ -8,6 +8,7 @@ config.read('config.conf')
 
 g5kConfig = config['g5k']
 deployImg = str(g5kConfig['deploy.image.name'])
+imageAddress = str(g5kConfig['deploy.imgae.address'])
 userName = str(g5kConfig['user.name'])
 oarFile = str(g5kConfig['oar.file.location'])
 multiCluster = str(g5kConfig['multi.cluster']) in "yes"
@@ -20,7 +21,7 @@ clusterNodes = list(set(clusterNodes))
 nodesNbr = len(clusterNodes)
 print("Your cluster is composed by {} nodes: {}".format(nodesNbr, clusterNodes))
 
-Download the image
+### Download the image
 os.system('curl -o images/debian10-spark-base.tgz {}'.format(imageAddress)) 
 
 ### Deploy image through kadeploy in g5k ###
