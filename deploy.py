@@ -43,7 +43,7 @@ masterNode = sh.ShellHandler(masterNode, "root")
 ## get master IP
 shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'")
 print(shout)
-print(shout(0))
+print(shout[0])
 print(re.findall(r'(\d{1-4}\.\d{1-4}\.\d{1-4}\.\d{1-4})', (shout)[0]))
 # masterIP = (re.findall(r'(\d{1-4}\.\d{1-4}\.\d{1-4}\.\d{1-4})', (shout)[0]))[0]
 # masterAddress = "spark://{}:7077".format(str(masterIP))
