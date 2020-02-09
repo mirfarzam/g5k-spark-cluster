@@ -20,7 +20,7 @@ sparkDirectory = str(g5kConfig['spark.directory'])
 
 
 ### Config Java Version in Front-end
-masterNode.execute('export JAVA_HOME="{}";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
+os.system('export JAVA_HOME="{}";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
 
 oarFile = os.environ.get('OAR_NODE_FILE')
 with open(oarFile) as file:
