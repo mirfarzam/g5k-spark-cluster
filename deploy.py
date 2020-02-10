@@ -53,13 +53,13 @@ shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'
 masterIP = re.sub(r'\n','',shout[0])
 masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
-masterNode.execute("./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
+masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
 
 for node in clusterNodes:
     print("running on worker : {}".format(node))
     worker = sh.ShellHandler(node, "root")
     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
-    masterNode.execute("./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
+    masterNode.execute("nohup ./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
 
 ## Modify Spark Config File
