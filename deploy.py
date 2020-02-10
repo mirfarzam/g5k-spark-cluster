@@ -35,16 +35,17 @@ print("Your cluster is composed by {} nodes: {}".format(nodesNbr, clusterNodes))
 
 ### Deploy image through kadeploy in g5k ###
 
-kadeployCommad = 'kadeploy3 -f {} -a {} -k'.format(oarFile, deployImg)
-if multiCluster:
-    kadeployCommad = kadeployCommad + " --multi-server"
-print(kadeployCommad)
-os.system(kadeployCommad)
+# kadeployCommad = 'kadeploy3 -f {} -a {} -k'.format(oarFile, deployImg)
+# if multiCluster:
+#     kadeployCommad = kadeployCommad + " --multi-server"
+# print(kadeployCommad)
+# os.system(kadeployCommad)
 # kadeployArgs = commandSplit(kadeployCommad)
 # kadeployProcess = subprocess.Popen(kadeployArgs, stderr=stderr, stdout=stdout)
 # kadeployProcess.communicate()
 
 masterNode = clusterNodes.pop(0)
+print(masterNode)
 masterNode = sh.ShellHandler(masterNode, "root")
 ## Setting Correct Java Version
 masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
@@ -53,27 +54,27 @@ shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'
 masterIP = re.sub(r'\n','',shout[0])
 masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
-masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
+masterNode.execute("./spark/bin/spark-class org.apache.spark.deploy.master.Master")
 
-for node in clusterNodes:
-    print("running on worker : {}".format(node))
-    worker = sh.ShellHandler(node, "root")
-    worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
-    masterNode.execute("nohup ./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
-    print("success on {}".format(node))
+# for node in clusterNodes:
+#     print("running on worker : {}".format(node))
+#     worker = sh.ShellHandler(node, "root")
+#     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
+#     masterNode.execute("nohup ./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
+#     print("success on {}".format(node))
 
 ## Modify Spark Config File
-with open("namb/config/spark-benchmark.yml", "r+") as f:
-     old = f.read() # read everything in the file
-     f.seek(0)
-     print(masterAddress)
-     old = re.sub(r'master: (\w+)\n','master: {}\n'.format(masterAddress), old)
-     f.write(old) # write the new line before
+# with open("namb/config/spark-benchmark.yml", "r+") as f:
+#      old = f.read() # read everything in the file
+#      f.seek(0)
+#      print(masterAddress)
+#      old = re.sub(r'master: (\w+)\n','master: {}\n'.format(masterAddress), old)
+#      f.write(old) # write the new line before
     
-### Run Namb Application
-majid = sparkDirectory + "/bin/spark-submit" + " --class fr.unice.namb.spark.BenchmarkApplication" + " --master {}".format(masterAddress) + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar" + " /home/smirmoeini/g5k-spark-cluster/namb/config/workflow_schema.yml" + " /home/smirmoeini/g5k-spark-cluster/namb/config/spark-benchmark.yml"
-print(majid)
-os.system(majid)
+# ### Run Namb Application
+# majid = sparkDirectory + "/bin/spark-submit" + " --class fr.unice.namb.spark.BenchmarkApplication" + " --master {}".format(masterAddress) + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar" + " /home/smirmoeini/g5k-spark-cluster/namb/config/workflow_schema.yml" + " /home/smirmoeini/g5k-spark-cluster/namb/config/spark-benchmark.yml"
+# print(majid)
+# os.system(majid)
 
     
 
