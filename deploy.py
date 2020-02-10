@@ -48,7 +48,7 @@ masterNode = clusterNodes.pop(0)
 print(masterNode)
 masterNode = sh.ShellHandler(masterNode, "root")
 ## Setting Correct Java Version
-masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
+masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;', "master")
 ## get master IP
 shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'")
 masterIP = re.sub(r'\n','',shout[0])
