@@ -35,15 +35,14 @@ print("Your cluster is composed by {} nodes: {}".format(nodesNbr, clusterNodes))
 # os.system('curl -o images/debian10-spark-base.tgz {}'.format(imageAddress)) 
 
 ### Deploy image through kadeploy in g5k ###
-
-# kadeployCommad = 'kadeploy3 -f {} -a {} -k'.format(oarFile, deployImg)
-# if multiCluster:
-#     kadeployCommad = kadeployCommad + " --multi-server"
-# print(kadeployCommad)
-# os.system(kadeployCommad)
-# kadeployArgs = commandSplit(kadeployCommad)
-# kadeployProcess = subprocess.Popen(kadeployArgs, stderr=stderr, stdout=stdout)
-# kadeployProcess.communicate()
+kadeployCommad = 'kadeploy3 -f {} -a {} -k'.format(oarFile, deployImg)
+if multiCluster:
+    kadeployCommad = kadeployCommad + " --multi-server"
+print(kadeployCommad)
+os.system(kadeployCommad)
+kadeployArgs = commandSplit(kadeployCommad)
+kadeployProcess = subprocess.Popen(kadeployArgs, stderr=stderr, stdout=stdout)
+kadeployProcess.communicate()
 
 masterNode = clusterNodes.pop(0)
 print(masterNode)
@@ -68,11 +67,13 @@ for node in clusterNodes:
     time.sleep(30)
 
 ## Modify Spark Config File
+print("Right now master is : {}".format(masterAddress))
 with open("namb/config/spark-benchmark.yml", "r+") as f:
      old = f.read() # read everything in the file
      f.seek(0)
      print(masterAddress)
      old = re.sub(r'master: (\w+)\n','master: {}\n'.format(masterAddress), old)
+     print("And I write this to conf file : {}".format(old))
      f.write(old) # write the new line before
     
 # ### Run Namb Application
