@@ -51,6 +51,7 @@ class ShellHandler:
         sherr = []
         exit_status = 0
         for line in self.stdout:
+            print(line)
             if type == "master":
                 success = re.findall('Successfully started service', line)
                 if len(success) > 0:
