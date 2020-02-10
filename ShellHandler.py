@@ -31,7 +31,7 @@ class ShellHandler:
         print('------------------------------------')
         pass
 
-    def execute(self, cmd):
+    def execute(self, cmd, type=None):
         """
 
         :param cmd: the command to be executed on the remote computer
@@ -51,7 +51,11 @@ class ShellHandler:
         sherr = []
         exit_status = 0
         for line in self.stdout:
-            print(line)
+            if type == "master":
+                success = re.findall('Successfully started service', line)
+                if len(success) > 0:
+                    print("master is up correctly")
+                    break
             if str(line).startswith(cmd) or str(line).startswith(echo_cmd):
                 # up for now filled with shell junk from stdin
                 shout = []
@@ -79,5 +83,5 @@ class ShellHandler:
         if sherr and cmd in sherr[0]:
             sherr.pop(0)
 
-        self._print_exec_out(cmd=cmd, out_buf=shout, err_buf=sherr, exit_status=exit_status)
+        # self._print_exec_out(cmd=cmd, out_buf=shout, err_buf=sherr, exit_status=exit_status)
         return shin, shout, sherr
