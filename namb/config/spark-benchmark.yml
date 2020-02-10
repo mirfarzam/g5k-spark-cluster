@@ -1,7 +1,7 @@
 applicationName: spark-namb
 batchTime: 10
 debugFrequency: 10
-master: asdasd
+master: spark://172.16.130.2:7077
 executors: 5
 
 
