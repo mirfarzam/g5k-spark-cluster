@@ -63,7 +63,7 @@ for node in clusterNodes:
     print("running on worker : {}".format(node))
     worker = sh.ShellHandler(node, "root")
     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
-    masterNode.execute("nohup ./bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
+    masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
     time.sleep(30)
 
