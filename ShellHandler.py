@@ -51,6 +51,7 @@ class ShellHandler:
         sherr = []
         exit_status = 0
         for line in self.stdout:
+            print(line)
             if str(line).startswith(cmd) or str(line).startswith(echo_cmd):
                 # up for now filled with shell junk from stdin
                 shout = []
