@@ -48,13 +48,13 @@ masterNode = clusterNodes.pop(0)
 print(masterNode)
 masterNode = sh.ShellHandler(masterNode, "root")
 ## Setting Correct Java Version
-masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;', "master")
+masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
 ## get master IP
 shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'")
 masterIP = re.sub(r'\n','',shout[0])
 masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
-masterNode.execute("./spark/bin/spark-class org.apache.spark.deploy.master.Master")
+masterNode.execute("./spark/bin/spark-class org.apache.spark.deploy.master.Master", type="master")
 
 # for node in clusterNodes:
 #     print("running on worker : {}".format(node))

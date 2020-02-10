@@ -53,7 +53,7 @@ class ShellHandler:
         for line in self.stdout:
             print(line)
             if type == "master":
-                success = re.findall('Successfully started service', line)
+                success = re.findall('Successfully', line)
                 if len(success) > 0:
                     print("master is up correctly")
                     break
