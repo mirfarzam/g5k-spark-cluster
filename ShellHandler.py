@@ -83,5 +83,5 @@ class ShellHandler:
         if sherr and cmd in sherr[0]:
             sherr.pop(0)
 
-        # self._print_exec_out(cmd=cmd, out_buf=shout, err_buf=sherr, exit_status=exit_status)
+        self._print_exec_out(cmd=cmd, out_buf=shout, err_buf=sherr, exit_status=exit_status)
         return shin, shout, sherr
