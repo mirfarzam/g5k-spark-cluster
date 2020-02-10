@@ -67,7 +67,7 @@ with open("namb/config/spark-benchmark.yml", "r+") as f:
      old = f.read() # read everything in the file
      f.seek(0)
      print(masterAddress)
-     old = re.sub(r'master: (.*)$','master: {}'.format(masterAddress), old)
+     old = re.sub(r'master: (\w+)\n','master: {}\n'.format(masterAddress), old)
      f.write(old) # write the new line before
     
 ### Run Namb Application
