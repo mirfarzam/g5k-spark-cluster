@@ -7,6 +7,7 @@ from shlex import split as commandSplit
 import re
 import yaml
 import time
+import sys
 
 config = ConfigParser()
 config.read('config.conf')
@@ -23,7 +24,9 @@ sparkDirectory = str(g5kConfig['spark.directory'])
 
 
 ### Config Java Version in Front-end
-os.system('export JAVA_HOME="{}";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
+java_command  = ('export JAVA_HOME="{}";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
+print(java_command)
+os.system(java_command)
 
 oarFile = os.environ.get('OAR_NODE_FILE')
 with open(oarFile) as file:
