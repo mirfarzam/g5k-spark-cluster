@@ -43,7 +43,7 @@ if multiCluster:
 print(kadeployCommad)
 os.system(kadeployCommad)
 kadeployArgs = commandSplit(kadeployCommad)
-kadeployProcess = subprocess.Popen(kadeployArgs, stderr=stderr, stdout=stdout)
+kadeployProcess = subprocess.Popen(kadeployArgs, stderr=None, stdout=None)
 kadeployProcess.communicate()
 
 masterNode = clusterNodes.pop(0)
