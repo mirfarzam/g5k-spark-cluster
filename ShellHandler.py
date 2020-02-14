@@ -15,6 +15,10 @@ class ShellHandler:
 
     def __del__(self):
         self.ssh.close()
+    
+    def close():
+        ssh.close()
+        ssh.__del__()
 
     @staticmethod
     def _print_exec_out(cmd, out_buf, err_buf, exit_status):

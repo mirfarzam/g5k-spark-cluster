@@ -71,6 +71,7 @@ for node in clusterNodes:
     masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
     time.sleep(30)
+    worker.close()
 
 ## Modify Spark Config File
 print("Right now master is : {}".format(masterAddress))
