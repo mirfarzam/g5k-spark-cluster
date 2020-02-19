@@ -61,6 +61,7 @@ masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
 masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
 print("check check check")
+masterNode.close()
 
 for i in range(1,len(clusterNodes)):
     node = clusterNodes[i]
@@ -70,7 +71,7 @@ for i in range(1,len(clusterNodes)):
     worker.execute('ip a')
     masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
-    worker.close()
+    #worker.close()
 
 
 ## This part of the Code is related to Namb and should be deleted from this file
