@@ -69,7 +69,7 @@ for i in range(1,len(clusterNodes)):
     worker = sh.ShellHandler(node, "root")
     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
     worker.execute('ip a')
-    masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
+    worker.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
     worker.close()
 
