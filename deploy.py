@@ -71,7 +71,7 @@ for i in range(1,len(clusterNodes)):
     worker.execute('ip a')
     masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
-    #worker.close()
+    worker.close()
 
 
 ## This part of the Code is related to Namb and should be deleted from this file

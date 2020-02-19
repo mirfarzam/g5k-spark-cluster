@@ -16,7 +16,7 @@ class ShellHandler:
     def __del__(self):
         self.ssh.close()
     
-    def close():
+    def close(self):
         ssh.close()
         ssh.__del__()
 
