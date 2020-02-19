@@ -49,7 +49,7 @@ kadeployArgs = commandSplit(kadeployCommad)
 kadeployProcess = subprocess.Popen(kadeployArgs, stderr=None, stdout=None)
 kadeployProcess.communicate()
 
-masterNode = clusterNodes.pop(0)
+masterNode = clusterNodes[0]
 print(masterNode)
 masterNode = sh.ShellHandler(masterNode, "root")
 ## Setting Correct Java Version
@@ -62,7 +62,8 @@ masterAddress = "spark://{}:7077".format(str(masterIP))
 masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
 print("check check check")
 
-for node in clusterNodes:
+for i in range(1,len(clusterNodes)):
+    node = clusterNodes[i]
     print("running on worker : {}".format(node))
     worker = sh.ShellHandler(node, "root")
     worker.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
