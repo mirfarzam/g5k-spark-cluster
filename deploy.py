@@ -60,7 +60,6 @@ masterIP = re.sub(r'\n','',shout[0])
 masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
 masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
-print("check check check")
 masterNode.close()
 
 for i in range(1,len(clusterNodes)):
