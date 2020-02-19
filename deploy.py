@@ -61,7 +61,6 @@ masterAddress = "spark://{}:7077".format(str(masterIP))
 # ## Running Mater
 masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.master.Master &")
 print("check check check")
-time.sleep(180)
 
 for node in clusterNodes:
     print("running on worker : {}".format(node))
@@ -70,23 +69,27 @@ for node in clusterNodes:
     worker.execute('ip a')
     masterNode.execute("nohup ./spark/bin/spark-class org.apache.spark.deploy.worker.Worker {} &".format(masterAddress))
     print("success on {}".format(node))
-    time.sleep(30)
     worker.close()
 
+
+## This part of the Code is related to Namb and should be deleted from this file
+
+
+
 ## Modify Spark Config File
-print("Right now master is : {}".format(masterAddress))
-with open("namb/config/spark-benchmark.yml", "r+") as f:
-     old = f.read() # read everything in the file
-     f.seek(0)
-     print(masterAddress)
-     old = re.sub(r'master: (.)+\n','master: {}\n'.format(masterAddress), old)
-     print("And I write this to conf file : {}".format(old))
-     f.write(old) # write the new line before
+# print("Right now master is : {}".format(masterAddress))
+# with open("namb/config/spark-benchmark.yml", "r+") as f:
+#      old = f.read() # read everything in the file
+#      f.seek(0)
+#      print(masterAddress)
+#      old = re.sub(r'master: (.)+\n','master: {}\n'.format(masterAddress), old)
+#      print("And I write this to conf file : {}".format(old))
+#      f.write(old) # write the new line before
     
 # ### Run Namb Application
-majid = sparkDirectory + "/bin/spark-submit" + " --class fr.unice.namb.spark.BenchmarkApplication" + " --master {}".format(masterAddress) + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar" + " /home/smirmoeini/g5k-spark-cluster/namb/config/workflow_schema.yml" + " /home/smirmoeini/g5k-spark-cluster/namb/config/spark-benchmark.yml"
-print(majid)
-os.system(majid)
+# majid = sparkDirectory + "/bin/spark-submit" + " --class fr.unice.namb.spark.BenchmarkApplication" + " --master {}".format(masterAddress) + " /home/smirmoeini/g5k-spark-cluster/namb/spark-namb.jar" + " /home/smirmoeini/g5k-spark-cluster/namb/config/workflow_schema.yml" + " /home/smirmoeini/g5k-spark-cluster/namb/config/spark-benchmark.yml"
+# print(majid)
+# os.system(majid)
 
     
 
