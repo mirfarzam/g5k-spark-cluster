@@ -24,7 +24,7 @@ sparkDirectory = str(g5kConfig['spark.directory'])
 
 
 ### Config Java Version in Front-end
-java_command  = ('export JAVA_HOME="{}";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
+java_command  = ('export JAVA_HOME="/home/smirmoeini/public/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;'.format(java8Directory))
 print(java_command)
 os.system(java_command)
 
@@ -53,7 +53,7 @@ masterNode = clusterNodes[0]
 print(masterNode)
 masterNode = sh.ShellHandler(masterNode, "root")
 ## Setting Correct Java Version
-masterNode.execute('export JAVA_HOME="/home/smirmoeini/public/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
+masterNode.execute('export JAVA_HOME="/root/java";export PATH=$JAVA_HOME/bin:$PATH;java -version;')
 ## get master IP
 shin, shout, sherr = masterNode.execute("ip route get 1.2.3.4 | awk '{print $7}'")
 masterIP = re.sub(r'\n','',shout[0])
